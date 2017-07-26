@@ -1,12 +1,20 @@
+# == Class: profile::apache_webserver
+#
+# Per the puppetlabs/apache documentation,
+#
+# "The Puppet module applies a default configuration based on your operating system; Debian, Red Hat, FreeBSD, and
+# Gentoo systems each have unique default configurations. These defaults work in testing environments but are not
+# suggested for production"
+#
+# So, this profile sets some hardened values that place apache into a sane and consistent state, ready for you to
+# add apache::vhost resources to the node.
+# See https://wiki.msi.umn.edu/display/AP/Puppetizing+Apache+Best+Practice.
+#
+# === Parameters
+#
+# Document parameters here.
+#
 class profile::apache_webserver {
-  # Per the puppetlabs/apache documentation,
-  #
-  # "The Puppet module applies a default configuration based on your operating system; Debian, Red Hat, FreeBSD, and
-  # Gentoo systems each have unique default configurations. These defaults work in testing environments but are not
-  # suggested for production"
-  #
-  # So, let's set some hardened values here.
-
   # define MSI-specific parameters and deploy incommon CA certs
   include apache_msi
   include apache_msi::httpoxy_mitigation
@@ -46,7 +54,7 @@ class profile::apache_webserver {
   }
 
   class { 'apache::mod::ssl':
-    ssl_cipher             => ${apache_msi::params::ssl_cipher}
+    ssl_cipher             => $apache_msi::params::ssl_cipher
   }
 
 }
