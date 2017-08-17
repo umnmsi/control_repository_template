@@ -7,7 +7,7 @@ mod 'darin-zypprepo',          '1.0.2'   # Latest on 7/26/17. Dependency of pupp
 mod 'puppet-archive',          '1.3.0'   # Latest on 7/26/17
 mod 'puppet-php',
   :git => 'https://github.com/voxpupuli/puppet-php.git',
-  :ref => '7429e50260399e6cc7e1d2af5eb540834e306b5c'  # Latest on 7/26/17
+  :ref => '91a42b95fb9e9b093043853904441df3347a1db7'  # Latest on 8/17/17
 mod 'puppet-staging',          '2.2.0'   # Latest on 7/27/17. Dependency of puppetlabs-mysql.
 
 # Maintaned by Puppetlabs
