@@ -2,6 +2,7 @@
 version: 5
 defaults:
   datadir: hieradata
+  data_hash: yaml_data
 
 hierarchy:
   - name: "Per-node data"
