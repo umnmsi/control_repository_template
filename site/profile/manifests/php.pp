@@ -11,8 +11,9 @@ class profile::php {
     php_version => '7.1',
   }
   -> yumrepo { 'remi-php71':
-    descr      => "Remi\'s PHP 7.1 RPM repository for Enterprise Linux ${::releasever} - ${::basearch}",
-    mirrorlist => "https://rpms.remirepo.net/enterprise/${::releasever}/php71/mirror",
+    # $releasever and $basearch are not puppet variables and are meaningful to yum.
+    descr      => 'Remi\'s PHP 7.1 RPM repository for Enterprise Linux $releaesver - $basearch',
+    mirrorlist => 'https://rpms.remirepo.net/enterprise/$releasever/php71/mirror',
     enabled    => 1,
     gpgcheck   => 1,
     gpgkey     => 'https://rpms.remirepo.net/RPM-GPG-KEY-remi',
