@@ -1,3 +1,7 @@
 ---
 classes:
   - role::nextcloud_server
+
+# Dedicated accounts are called for in production
+apache_webserver::apache_user: wwwrun
+apache_webserver::apache_group: www

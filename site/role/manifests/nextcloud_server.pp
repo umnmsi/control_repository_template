@@ -8,6 +8,6 @@
 # Document parameters here.
 #
 class role::nextcloud_server {
-  include profile::apache_webserver
-  include profile::php
+  include profile::nextcloud_server
+  # In the future, we'll also have profiles for base_iops etc in here.
 }

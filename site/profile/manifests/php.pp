@@ -1,6 +1,11 @@
 # == Class: profile::php
 #
 # Replaces the system PHP with a current version.
+# Currently only works on CentOS, because voxpupuli/php doesn't
+# quite manage repositories correctly and the PR merge rate was low enough
+# that I didn't want to attempt a mainline fix, so instead I just disabled
+# repo management and threw in some enterprise-linux only code to add
+# remi-php71.
 #
 # === Parameters
 #
@@ -12,7 +17,7 @@ class profile::php {
   }
   -> yumrepo { 'remi-php71':
     # $releasever and $basearch are not puppet variables and are meaningful to yum.
-    descr      => 'Remi\'s PHP 7.1 RPM repository for Enterprise Linux $releaesver - $basearch',
+    descr      => 'Remi\'s PHP 7.1 RPM repository for Enterprise Linux $releasever - $basearch',
     mirrorlist => 'https://rpms.remirepo.net/enterprise/$releasever/php71/mirror',
     enabled    => 1,
     gpgcheck   => 1,

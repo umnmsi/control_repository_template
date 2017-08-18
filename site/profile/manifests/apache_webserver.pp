@@ -12,9 +12,15 @@
 #
 # === Parameters
 #
-# Document parameters here.
+# [*apache_user*]
+#   The user apache runs under. You'll want to override these in hiera node files, or at least review them.
+#   wwwrun is a catch-all user, but there are real security benefits to running different webapps as different users.
+# [*apache_group*]
 #
-class profile::apache_webserver {
+class profile::apache_webserver (
+  String $apache_user  = 'nobody',
+  String $apache_group = 'nobody',
+) {
   # define MSI-specific parameters and deploy incommon CA certs
   include apache_msi
   include apache_msi::httpoxy_mitigation
@@ -27,12 +33,8 @@ class profile::apache_webserver {
     default_ssl_chain      => $apache_msi::params::incommon_ca_chain,
     dev_packages           => '',
     error_documents        => false,
-
-    # You'll want to override these in hiera node files, or at least review them.
-    # wwwrun is a catch-all user, but there are real security benefits to running different webapps as different users.
-    user                   => nobody,
-    group                  => nobody,
-
+    user                   => $apache_user,
+    group                  => $apache_group,
     manage_user            => false,
     manage_group           => false,
     keepalive              => 'On',
