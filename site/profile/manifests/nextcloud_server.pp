@@ -30,7 +30,7 @@ class profile::nextcloud_server (
     owner     => 'root',
     group     => 'root',
     mode      => '0640',
-    content   => lookup("website_ssl_keys.'${fqdn}'"),
+    content   => lookup("website_ssl_keys.${fqdn}"),
     show_diff => false,
     notify    => Service['httpd'],
   }
