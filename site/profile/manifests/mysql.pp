@@ -10,7 +10,7 @@ class profile::mysql(
   String $root_password = '',
 ) {
   if $root_password == '' {
-    $_root_password = lookup('credentials_mysql::root_password')
+    $_root_password = lookup('credentials_mysql.root_password')
   } else {
     $_root_password = $root_password
   }
