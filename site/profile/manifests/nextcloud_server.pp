@@ -17,6 +17,23 @@ class profile::nextcloud_server (
   include profile::php
   include profile::mysql
 
+  $ssl_certs_dir = $::apache::params::ssl_certs_dir
+
+  file { "${ssl_certs_dir}/${fqdn}.crt":
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => "puppet:///modules/ssl_certs/${fqdn}.crt",
+    notify => Service['httpd'],
+  }
+  file { "${ssl_certs_dir}/${fqdn}.key":
+    owner     => 'root',
+    group     => 'root',
+    mode      => '0640',
+    content   => lookup("website_ssl_keys.'${fqdn}'"),
+    show_diff => false,
+    notify    => Service['httpd'],
+  }
 
   apache::vhost { $fqdn:
     servername => $fqdn,
@@ -24,8 +41,8 @@ class profile::nextcloud_server (
     port       => 443,
     ip_based   => true,
     ip         => $ip,
-    # ssl_cert => "/etc/ssl/${fqdn}.crt",
-    # ssl_key  => "/etc/ssl/private/${fqdn}.key",
+    ssl_cert   => "${ssl_certs_dir}/${fqdn}.crt",
+    ssl_key    => "${ssl_certs_dir}/${fqdn}.key",
     docroot    => "/var/www/${fqdn}",
     block      => ['scm'],
   }
