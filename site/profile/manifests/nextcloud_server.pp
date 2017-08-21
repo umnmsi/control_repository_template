@@ -26,11 +26,12 @@ class profile::nextcloud_server (
     source => "puppet:///modules/ssl_certs/${fqdn}.crt",
     notify => Service['httpd'],
   }
+  $website_ssl_keys = lookup('website_ssl_keys')
   file { "${ssl_certs_dir}/${fqdn}.key":
     owner     => 'root',
     group     => 'root',
     mode      => '0640',
-    content   => lookup("website_ssl_keys.${fqdn}"),
+    content   => $website_ssl_keys[$fqdn],
     show_diff => false,
     notify    => Service['httpd'],
   }
