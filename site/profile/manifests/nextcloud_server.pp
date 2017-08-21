@@ -15,7 +15,7 @@ class profile::nextcloud_server (
 ) {
   include profile::apache_webserver
   include profile::php
-
+  include profile::mysql
 
 
   apache::vhost { $fqdn:
