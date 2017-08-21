@@ -36,6 +36,7 @@ class profile::nextcloud_server (
     port            => 80,
     ip_based        => true,
     ip              => $ip,
+    docroot         => '/dev/null',
     redirect_status => 'permanent',
     redirect_dest   => "https://${fqdn}/",
   }
