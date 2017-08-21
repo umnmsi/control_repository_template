@@ -2,6 +2,9 @@
 classes:
   - role::nextcloud_server
 
+# Override the value pulled by puppet from the hostname to just use production certificates etc.
+profile::nextcloud_server::fqdn: nextcloud.genomics.umn.edu
+
 # Dedicated accounts are called for in production
 apache_webserver::apache_user: wwwrun
 apache_webserver::apache_group: www
