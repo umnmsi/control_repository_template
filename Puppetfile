@@ -29,3 +29,7 @@ mod 'puppetlabs-stdlib',       '4.17.1'  # Latest on 7/26/17
 mod 'apache_msi',
   :git    => 'git@github.umn.edu:msi/ops_puppet_apache_msi.git',
   :branch => '1.0'
+
+mod 'php_msi',
+  :git    => 'git@github.umn.edu:msi/ops_puppet_php_msi.git',
+  :branch => '1.0'

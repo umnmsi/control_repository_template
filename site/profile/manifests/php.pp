@@ -27,4 +27,8 @@ class profile::php {
   -> class { '::php':
     manage_repos => false,
   }
+
+  class { '::php_msi::packages':
+    require => Class['profile::php'],
+  }
 }
