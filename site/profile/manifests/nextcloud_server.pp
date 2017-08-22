@@ -37,15 +37,22 @@ class profile::nextcloud_server (
   }
 
   apache::vhost { $fqdn:
-    servername => $fqdn,
-    ssl        => true,
-    port       => 443,
-    ip_based   => true,
-    ip         => $ip,
-    ssl_cert   => "${ssl_certs_dir}/${fqdn}.crt",
-    ssl_key    => "${ssl_certs_dir}/${fqdn}.key",
-    docroot    => "/var/www/${fqdn}",
-    block      => ['scm'],
+    servername  => $fqdn,
+    ssl         => true,
+    port        => 443,
+    ip_based    => true,
+    ip          => $ip,
+    ssl_cert    => "${ssl_certs_dir}/${fqdn}.crt",
+    ssl_key     => "${ssl_certs_dir}/${fqdn}.key",
+    docroot     => "/var/www/${fqdn}",
+    directories => [
+      { path => "/var/www/${fqdn}", 'options' => ['FollowSymLinks'], 'allow_override' => ['All'], }
+    ],
+    setenv      => [
+      "HOME /var/www/${fqdn}",
+      "HTTP_HOME /var/www/${fqdn}",
+    ],
+    block       => ['scm'],
   }
 
   apache::vhost { "${fqdn}-http":
