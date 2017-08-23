@@ -28,6 +28,10 @@ class profile::php {
     manage_repos => false,
   }
 
+  php::fpm::pool { 'www':
+    listen => '/var/run/php7-fpm.sock',
+  }
+
   class { '::php_msi::extensions':
     require => Class['profile::php'],
   }

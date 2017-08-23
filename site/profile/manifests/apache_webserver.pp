@@ -16,10 +16,14 @@
 #   The user apache runs under. You'll want to override these in hiera node files, or at least review them.
 #   wwwrun is a catch-all user, but there are real security benefits to running different webapps as different users.
 # [*apache_group*]
+#   The group apache runs under.
+# [*mpm_module*]
+#   The MPM process manager that will be used.
 #
 class profile::apache_webserver (
   String $apache_user  = 'nobody',
   String $apache_group = 'nobody',
+  String $mpm_module   = 'event',
 ) {
   # define MSI-specific parameters and deploy incommon CA certs
   include apache_msi
@@ -41,7 +45,8 @@ class profile::apache_webserver (
     keepalive_timeout      => 15,
     max_keepalive_requests => 100,
     # mpm_module will default differently for Debian and RedHat; let's not be inconsistent.
-    mpm_module             => 'prefork',
+    # Using 'event' as the default, because corresponding puppetization of php uses php-fpm.
+    mpm_module             => $mpm_module,
     # Yes, fully puppet-managed, please
     purge_configs          => true,
     serveradmin            => 'msi-asopsi@umn.edu',
