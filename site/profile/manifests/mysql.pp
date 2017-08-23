@@ -24,7 +24,7 @@ class profile::mysql(
     remove_default_accounts => true,
     override_options        => deep_merge({
         'mysqld' => {
-          'log-bin' => 'disabled', # The day we run replication anywhere at MSI, I will be stunned.
+          'max_allowed_packet' => '16M',
         },
       },
       $override_options
