@@ -28,7 +28,9 @@ class profile::php {
     manage_repos       => false,
     fpm_service_enable => true,
     fpm_service_ensure => 'running',
-    fpm_pools          => { 'listen' => '/var/run/php7-fpm.sock' },
+    fpm_pools          => {
+      www => {'listen' => '/var/run/php7-fpm.sock' }
+    }
   }
 
   class { '::php_msi::extensions':
