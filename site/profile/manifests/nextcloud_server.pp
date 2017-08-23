@@ -13,9 +13,11 @@ class profile::nextcloud_server (
   String $fqdn = $trusted['certname'],
   String $ip   = $facts['ipaddress'],
 ) {
+  ############################
+  ### Apache configuration ###
+  ############################
   include profile::apache_webserver
   include profile::php
-  include profile::mysql
 
   $ssl_certs_dir = $::apache::params::ssl_certs_dir
 
@@ -46,7 +48,7 @@ class profile::nextcloud_server (
     ssl_key     => "${ssl_certs_dir}/${fqdn}.key",
     docroot     => "/var/www/${fqdn}",
     directories => [
-      { path => "/var/www/${fqdn}", 'options' => ['FollowSymLinks'], 'allow_override' => ['All'], }
+      { path => "/var/www/${fqdn}", 'options' => ['+FollowSymLinks'], 'allow_override' => ['All'], }
     ],
     setenv      => [
       "HOME /var/www/${fqdn}",
@@ -64,5 +66,17 @@ class profile::nextcloud_server (
     docroot         => '/var/www/nonssl_redirect_empty_docroot',
     redirect_status => 'permanent',
     redirect_dest   => "https://${fqdn}/",
+  }
+
+  ##############################
+  ### Database Configuration ###
+  ##############################
+  include profile::mysql
+
+  mysql::db { 'nextcloud':
+    user     => 'nextcloud',
+    password => '*33D8B521314C648A6D5125CF472C3F43C317B339', # This is a hash
+    host     => 'localhost',
+    grant    => ['ALL']
   }
 }
