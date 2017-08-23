@@ -19,6 +19,7 @@ class profile::nextcloud_server (
   include profile::apache_webserver
   include profile::php
 
+  $docroot = "/var/www/${fqdn}"
   $ssl_certs_dir = $::apache::params::ssl_certs_dir
 
   file { "${ssl_certs_dir}/${fqdn}.crt":
@@ -39,22 +40,25 @@ class profile::nextcloud_server (
   }
 
   apache::vhost { $fqdn:
-    servername  => $fqdn,
-    ssl         => true,
-    port        => 443,
-    ip_based    => true,
-    ip          => $ip,
-    ssl_cert    => "${ssl_certs_dir}/${fqdn}.crt",
-    ssl_key     => "${ssl_certs_dir}/${fqdn}.key",
-    docroot     => "/var/www/${fqdn}",
-    directories => [
-      { path => "/var/www/${fqdn}", 'options' => ['+FollowSymLinks'], 'allow_override' => ['All'], }
+    servername       => $fqdn,
+    ssl              => true,
+    port             => 443,
+    ip_based         => true,
+    ip               => $ip,
+    ssl_cert         => "${ssl_certs_dir}/${fqdn}.crt",
+    ssl_key          => "${ssl_certs_dir}/${fqdn}.key",
+    docroot          => $docroot,
+    directories      => [
+      { path => $docroot, 'options' => ['+FollowSymLinks'], 'allow_override' => ['All'], }
     ],
-    setenv      => [
-      "HOME /var/www/${fqdn}",
-      "HTTP_HOME /var/www/${fqdn}",
+    proxy_pass_match => [
+      { 'path' => '^/(.*\.php(/.*)?)$', 'url' => "unix:${::profile::php::fpm_socket}|fcgi://127.0.0.1:9000/${docroot}" }
     ],
-    block       => ['scm'],
+    setenv           => [
+      "HOME ${docroot}",
+      "HTTP_HOME ${docroot}",
+    ],
+    block            => ['scm'],
   }
 
   apache::vhost { "${fqdn}-http":

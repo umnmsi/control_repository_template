@@ -11,7 +11,10 @@
 #
 # Document parameters here.
 #
-class profile::php {
+class profile::php (
+  String $fpm_socket = '/var/run/php7-fpm.sock'
+) {
+
   class { '::php::globals':
     php_version => '7.1',
   }
@@ -29,7 +32,7 @@ class profile::php {
     fpm_service_enable => true,
     fpm_service_ensure => 'running',
     fpm_pools          => {
-      www => {'listen' => '/var/run/php7-fpm.sock' }
+      www => {'listen' => $fpm_socket }
     }
   }
 
