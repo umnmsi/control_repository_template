@@ -15,6 +15,24 @@ class profile::php (
   String $fpm_socket = '/var/run/php7-fpm.sock'
 ) {
 
+  if Class['apache'] {
+    $has_apache = true
+  } else {
+    $has_apache = false
+  }
+
+  $fpm_service_ensure = $has_apache ? {
+    true  => 'running',
+    false => 'stopped',
+  }
+
+  $fpm_pools = $has_apache ? {
+    true => {
+      www => {'listen' => $fpm_socket }
+    },
+    false => { },
+  }
+
   class { '::php::globals':
     php_version => '7.1',
   }
@@ -29,18 +47,22 @@ class profile::php (
   }
   -> class { '::php':
     manage_repos       => false,
-    fpm_service_enable => true,
-    fpm_service_ensure => 'running',
-    fpm_pools          => {
-      www => {'listen' => $fpm_socket }
-    }
+    fpm_service_enable => $has_apache,
+    fpm_service_ensure => $fpm_service_ensure,
+    fpm_pools          => $fpm_pools,
   }
 
   class { '::php_msi::extensions':
     require => Class['profile::php'],
   }
 
-  if Class['apache'] {
+  if $has_apache {
     include apache::mod::proxy_fcgi
+    file { $fpm_socket:
+      ensure  => present,
+      owner   => $::apache::user,
+      mode    => '0700',
+      require => Class['php'],
+    }
   }
 }
