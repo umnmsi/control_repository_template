@@ -39,4 +39,8 @@ class profile::php (
   class { '::php_msi::extensions':
     require => Class['profile::php'],
   }
+
+  if Class['apache'] {
+    include apache::mod::proxy_fcgi
+  }
 }
