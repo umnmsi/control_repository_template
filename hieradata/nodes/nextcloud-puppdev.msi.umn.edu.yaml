@@ -6,5 +6,5 @@ classes:
 profile::nextcloud_server::fqdn: nextcloud.genomics.umn.edu
 
 # Dedicated accounts are called for in production
-apache_webserver::apache_user: wwwrun
-apache_webserver::apache_group: www
+profile::apache_webserver::apache_user: wwwrun
+profile::apache_webserver::apache_group: www
