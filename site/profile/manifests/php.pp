@@ -28,7 +28,7 @@ class profile::php (
 
   $fpm_pools = $has_apache ? {
     true => {
-      www => {'listen' => $fpm_socket }
+      www => {'listen' => $fpm_socket, 'user' => $::apache::user }
     },
     false => { },
   }
