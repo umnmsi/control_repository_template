@@ -28,7 +28,7 @@ class profile::php (
 
   $fpm_pools = $has_apache ? {
     true => {
-      www => {'listen' => $fpm_socket, 'user' => $::apache::user }
+      www => {'listen' => $fpm_socket, 'user' => $::apache::user, 'listen_owner' => $::apache::user }
     },
     false => { },
   }
@@ -58,11 +58,5 @@ class profile::php (
 
   if $has_apache {
     include apache::mod::proxy_fcgi
-    file { $fpm_socket:
-      ensure  => present,
-      owner   => $::apache::user,
-      mode    => '0700',
-      require => Class['php'],
-    }
   }
 }
