@@ -49,7 +49,12 @@ class profile::nextcloud_server (
     ssl_key          => "${ssl_certs_dir}/${fqdn}.key",
     docroot          => $docroot,
     directories      => [
-      { path => $docroot, 'options' => ['+FollowSymLinks'], 'allow_override' => ['All'], }
+      {
+        path             => $docroot,
+        headers          => 'always set Strict-Transport-Security "max-age=15552000; includeSubDomains"',
+        'options'        => ['+FollowSymLinks'],
+        'allow_override' => ['All'],
+      }
     ],
     proxy_pass_match => [
       { 'path' => '^/(.*\.php(/.*)?)$', 'url' => "unix:${::profile::php::fpm_socket}|fcgi://127.0.0.1:9000/${docroot}" }
