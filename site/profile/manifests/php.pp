@@ -36,6 +36,15 @@ class profile::php (
   class { '::php::globals':
     php_version => '7.1',
   }
+  # Add remi repos here rather than ::php's manage_repos, which doesn't produce php 7 repo.
+  -> yumrepo { 'remi':
+    descr      => 'Remi\'s RPM repository for Enterprise Linux $releasever - $basearch',
+    mirrorlist => 'https://rpms.remirepo.net/enterprise/$releasever/remi/mirror',
+    enabled    => 1,
+    gpgcheck   => 1,
+    gpgkey     => 'https://rpms.remirepo.net/RPM-GPG-KEY-remi',
+    priority   => 1,
+  }
   -> yumrepo { 'remi-php71':
     # $releasever and $basearch are not puppet variables and are meaningful to yum.
     descr      => 'Remi\'s PHP 7.1 RPM repository for Enterprise Linux $releasever - $basearch',
