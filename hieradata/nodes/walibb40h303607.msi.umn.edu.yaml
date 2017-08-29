@@ -1,0 +1,9 @@
+---
+classes:
+  - role::nextcloud_server
+
+# Override the value pulled by puppet from the hostname to just use production certificates etc.
+profile::nextcloud_server::fqdn: nextcloud.genomics.umn.edu
+
+profile::apache_webserver::apache_user: msi_umgcnextcloud
+profile::apache_webserver::apache_group: msi_umgcnextcloud
