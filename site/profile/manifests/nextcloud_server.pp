@@ -17,7 +17,20 @@ class profile::nextcloud_server (
   ### Apache configuration ###
   ############################
   include profile::apache_webserver
-  include profile::php
+
+  # This breaks role/profile rules by including profile::php with resource-like
+  # syntax, but short of duplicating lots of configuraiton in each nodes' hiera
+  # settings, there doesn't seem to be an alternative to apply nextcloud-specific
+  # php config.
+  class { 'profile::php':
+    ini_settings => {
+      'PHP/upload_max_filesize' => '32M',
+      'PHP/post_max_size'       => '32M',
+      'PHP/max_input_time'      => '300',
+      'PHP/memory_limit'        => '64M',
+      'Date/date.timezone'      => 'America/Chicago',
+    }
+  }
 
   $docroot = "/var/www/${fqdn}"
   $ssl_certs_dir = $::apache::params::ssl_certs_dir
