@@ -12,7 +12,8 @@
 # Document parameters here.
 #
 class profile::php (
-  String $fpm_socket = '/var/run/php7-fpm.sock'
+  String $fpm_socket = '/var/run/php7-fpm.sock',
+  Hash $ini_settings = { },
 ) {
 
   if Class['apache'] {
@@ -28,7 +29,7 @@ class profile::php (
 
   $fpm_pools = $has_apache ? {
     true => {
-      www => {'listen' => $fpm_socket, 'user' => $::apache::user, 'listen_owner' => $::apache::user }
+      www => {'listen' => $fpm_socket, 'user' => $::apache::user, 'group' => $::apache::group, 'listen_owner' => $::apache::user }
     },
     false => { },
   }
@@ -59,6 +60,7 @@ class profile::php (
     fpm_service_enable => $has_apache,
     fpm_service_ensure => $fpm_service_ensure,
     fpm_pools          => $fpm_pools,
+    settings           => $ini_settings,
   }
 
   class { '::php_msi::extensions':
