@@ -32,6 +32,11 @@ class profile::nextcloud_server (
     }
   }
 
+  # If we wanted to run multiple sites per physical node, resources below
+  # here could probably be added to a lambda over an array of hashes providing
+  # fqdn and running user/group. We'd mostly just want to add a php::fpm::pool
+  # resource for each.
+
   $docroot = "/var/www/${fqdn}"
   $ssl_certs_dir = $::apache::params::ssl_certs_dir
 
@@ -52,6 +57,12 @@ class profile::nextcloud_server (
     notify    => Service['httpd'],
   }
 
+  php::fpm::pool { $fqdn:
+    listen => '127.0.0.1:9000',
+    user   => $::apache::user,
+    group  => $::apache::group,
+  }
+
   apache::vhost { $fqdn:
     servername       => $fqdn,
     ssl              => true,
@@ -70,7 +81,7 @@ class profile::nextcloud_server (
       }
     ],
     proxy_pass_match => [
-      { 'path' => '^/(.*\.php(/.*)?)$', 'url' => "unix:${::profile::php::fpm_socket}|fcgi://127.0.0.1:9000/${docroot}" }
+      { 'path' => '^/(.*\.php(/.*)?)$', 'url' => "fcgi://127.0.0.1:9000${docroot}/" }
     ],
     setenv           => [
       "HOME ${docroot}",
