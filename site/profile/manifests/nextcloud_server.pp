@@ -10,7 +10,7 @@
 class profile::nextcloud_server (
   Array $sites,
 ) {
-  # Include further profiles
+  # Include further profiles and classes
   include profile::apache_webserver
   include profile::mysql
   # This breaks role/profile rules by including profile::php with resource-like
@@ -26,6 +26,8 @@ class profile::nextcloud_server (
       'Date/date.timezone'      => 'America/Chicago',
     }
   }
+
+  include apache_msi::mod::openidc
 
 
   # Set variables
