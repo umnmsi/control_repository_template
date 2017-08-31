@@ -27,7 +27,7 @@ class profile::nextcloud_server (
     }
   }
 
-  include apache_msi::mod::openidc
+  include apache_msi::mod::auth_openidc
 
 
   # Set variables
