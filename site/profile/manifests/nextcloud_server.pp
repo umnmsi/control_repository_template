@@ -42,7 +42,7 @@ class profile::nextcloud_server (
   }
 
   # Define a vhost and associated resources for each NextCloud instance.
-  $sites.each |Hash $site, Bool $ip_based, String $ip| {
+  $sites.each |Hash $site, Boolean $ip_based, String $ip| {
     ############################
     ### Apache configuration ###
     ############################
