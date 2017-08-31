@@ -1,0 +1,10 @@
+# This is an apache config file included in NextCloud vhosts.
+# It adds CILogon as an openid connect authn provider.
+
+OIDCProviderMetadataURL https://cilogon.org/.well-known/openid-configuration
+OIDCClientID <%= @oidc_client_id %>
+OIDCClientSecret <%= @oidc_client_secret %>
+
+OIDCRedirectURI https://<%= @fqdn %>/oauth_callback
+OIDCCryptoPassphrase <%= @oidc_crypto_passphrase %>
+OIDCScope "openid email org.cilogon.userinfo profile"
