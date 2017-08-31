@@ -10,12 +10,9 @@
 class profile::nextcloud_server (
   Array $sites,
 ) {
-  $ssl_certs_dir = $::apache::params::ssl_certs_dir
-  $apache_conf_dir = $::apache::params::conf_dir
-
+  # Include further profiles
   include profile::apache_webserver
   include profile::mysql
-
   # This breaks role/profile rules by including profile::php with resource-like
   # syntax, but short of duplicating lots of configuration in each nodes' hiera
   # settings, there doesn't seem to be an alternative to apply nextcloud-specific
@@ -30,6 +27,11 @@ class profile::nextcloud_server (
     }
   }
 
+
+  # Set variables
+  $ssl_certs_dir = $::apache::params::ssl_certs_dir
+  $apache_conf_dir = $::apache::params::conf_dir
+
   $ip_based = length($sites) ? {
     1       => true,
     default => false,
@@ -39,6 +41,7 @@ class profile::nextcloud_server (
     default => undef,
   }
 
+  # Define a vhost and associated resources for each NextCloud instance.
   $sites.each |Hash $site, Bool $ip_based, String $ip| {
     ############################
     ### Apache configuration ###
