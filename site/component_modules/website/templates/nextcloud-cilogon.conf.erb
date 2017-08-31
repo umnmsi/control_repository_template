@@ -8,3 +8,9 @@ OIDCClientSecret <%= @oidc_client_secret %>
 OIDCRedirectURI https://<%= @fqdn %>/oauth_callback
 OIDCCryptoPassphrase <%= @oidc_crypto_passphrase %>
 OIDCScope "openid email org.cilogon.userinfo profile"
+
+# Everything but webdav needs to be authenticated with CILogon.
+<LocationMatch "^/(?!remote\.php/webdav).*$">
+  AuthType openid-connect
+  Require valid-user
+</LocationMatch>
