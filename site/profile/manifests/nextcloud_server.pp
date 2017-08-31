@@ -19,18 +19,18 @@ class profile::nextcloud_server (
   # php config.
   class { 'profile::php':
     ini_settings => {
-      'PHP/upload_max_filesize'             => '128M',
-      'PHP/post_max_size'                   => '128M',
-      'PHP/max_input_time'                  => '300',
-      'PHP/memory_limit'                    => '512M',
-      'PHP/opcache.enable'                  => 1,
-      'PHP/opcache.enable_cli'              => 1,
-      'PHP/opcache.interned_strings_buffer' => 8,
-      'PHP/opcache.max_accelerated_files'   => 10000,
-      'PHP/opcache.memory_consumption'      => 128,
-      'PHP/opcache.save_comments'           => 1,
-      'PHP/opcache.revalidate_freq'         => 1,
-      'Date/date.timezone'                  => 'America/Chicago',
+      'PHP/upload_max_filesize'                 => '128M',
+      'PHP/post_max_size'                       => '128M',
+      'PHP/max_input_time'                      => '300',
+      'PHP/memory_limit'                        => '512M',
+      'opcache/opcache.enable'                  => 1,
+      'opcache/opcache.enable_cli'              => 1,
+      'opcache/opcache.interned_strings_buffer' => 8,
+      'opcache/opcache.max_accelerated_files'   => 10000,
+      'opcache/opcache.memory_consumption'      => 128,
+      'opcache/opcache.save_comments'           => 1,
+      'opcache/opcache.revalidate_freq'         => 1,
+      'Date/date.timezone'                      => 'America/Chicago',
     }
   }
 
