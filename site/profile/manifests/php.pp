@@ -62,7 +62,7 @@ class profile::php (
     fpm_pools          => $fpm_pools,
     settings           => $ini_settings,
     extensions         => {
-      opcache => { }
+      opcache => { zend => true }
     },
   }
 
