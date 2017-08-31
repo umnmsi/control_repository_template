@@ -61,6 +61,9 @@ class profile::php (
     fpm_service_ensure => $fpm_service_ensure,
     fpm_pools          => $fpm_pools,
     settings           => $ini_settings,
+    extensions         => {
+      opcache => { }
+    },
   }
 
   class { '::php_msi::extensions':
