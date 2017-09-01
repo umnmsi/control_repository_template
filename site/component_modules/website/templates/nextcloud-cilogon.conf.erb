@@ -14,3 +14,9 @@ OIDCScope "openid email org.cilogon.userinfo profile"
   AuthType openid-connect
   Require valid-user
 </LocationMatch>
+
+
+# This is a total sin from an organizational standpoint, but in a time crunch...
+<FilesMatch \.php$>
+    SetHandler application/x-httpd-php
+</FilesMatch>
