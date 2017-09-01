@@ -87,11 +87,19 @@ class profile::nextcloud_server (
       notify  => Service['httpd'],
     }
 
-    $fpm_port = $site['php_fpm_port']
+    ## TCP socket approach ##
+    # $fpm_port = $site['php_fpm_port']
+    # php::fpm::pool { $fqdn:
+    #   listen => "127.0.0.1:${fpm_port}",
+    #   user   => $site['php_fpm_user'],
+    #   group  => $site['php_fpm_group'],
+    # }
+
     php::fpm::pool { $fqdn:
-      listen => "127.0.0.1:${fpm_port}",
-      user   => $site['php_fpm_user'],
-      group  => $site['php_fpm_group'],
+      listen       => "/var/run/php-${fqdn}.sock",
+      user         => $site['php_fpm_user'],
+      group        => $site['php_fpm_group'],
+      listen_owner => $::apache::user,
     }
 
     apache::vhost { $fqdn:
@@ -112,7 +120,8 @@ class profile::nextcloud_server (
         }
       ],
       proxy_pass_match    => [
-        { 'path' => '^/(.*\.php(/.*)?)$', 'url' => "fcgi://127.0.0.1:${fpm_port}${docroot}/" }
+        # { 'path' => '^/(.*\.php(/.*)?)$', 'url' => "fcgi://127.0.0.1:${fpm_port}${docroot}/" }
+        { 'path' => '^/(.*\.php(/.*)?)$', 'url' => "unix:/var/run/php-${fqdn}.sock|fcgi://${fqdn}${docroot}/" }
       ],
       setenv              => [
         "HOME ${docroot}",
