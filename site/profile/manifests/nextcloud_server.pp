@@ -19,10 +19,10 @@ class profile::nextcloud_server (
   # php config.
   class { 'profile::php':
     ini_settings => {
-      'PHP/upload_max_filesize'                 => '128M',
-      'PHP/post_max_size'                       => '128M',
-      'PHP/max_input_time'                      => '300',
-      'PHP/memory_limit'                        => '512M',
+      'PHP/upload_max_filesize'                 => '16G',
+      'PHP/post_max_size'                       => '16G',
+      'PHP/max_input_time'                      => '600',
+      'PHP/memory_limit'                        => '16G',
       'opcache/opcache.enable'                  => 1,
       'opcache/opcache.enable_cli'              => 1,
       'opcache/opcache.interned_strings_buffer' => 8,
