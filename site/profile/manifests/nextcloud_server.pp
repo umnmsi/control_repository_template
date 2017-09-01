@@ -142,5 +142,14 @@ class profile::nextcloud_server (
       host     => 'localhost',
       grant    => ['ALL']
     }
+
+    ############################################
+    ### NextCloud background processing cron ###
+    ############################################
+    cron { "NextCloud ${fqdn}":
+      command => "/bin/php -f ${docroot}/cron.php",
+      user    => $site['php_fpm_user'],
+      minute  => '*/10',
+    }
   }
 }
