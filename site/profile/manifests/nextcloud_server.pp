@@ -85,11 +85,12 @@ class profile::nextcloud_server (
     $oidc_crypto_passphrase = lookup('OIDCCryptoPassphrase')
 
     file { $cilogon_config:
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0600',
-      content => template('website/nextcloud-cilogon.conf.erb'),
-      notify  => Service['httpd'],
+      owner     => 'root',
+      group     => 'root',
+      mode      => '0600',
+      content   => template('website/nextcloud-cilogon.conf.erb'),
+      show_diff => false, # CILogon secret is embedded within
+      notify    => Service['httpd'],
     }
 
     ## Both php-fpm flavors unused for now due to an issue with upload file size
