@@ -11,17 +11,13 @@ class profile::nextcloud_server (
   Array $sites,
 ) {
   # Include further profiles and classes
+  include profile::apache_webserver
   include profile::mysql
+
   # This breaks role/profile rules by including profile::php with resource-like
   # syntax, but short of duplicating lots of configuration in each nodes' hiera
   # settings, there doesn't seem to be an alternative to apply nextcloud-specific
   # php config.
-  class { 'profile::apache_webserver':
-    apache_user  => 'msi_umgcnextcloud',
-    apache_group => 'msi_umgcnextcloud',
-    mpm_module   => 'prefork',
-  }
-
   class { 'profile::php':
     ini_settings => {
       'PHP/upload_max_filesize'                 => '16G',
@@ -93,8 +89,6 @@ class profile::nextcloud_server (
       notify    => Service['httpd'],
     }
 
-    ## Both php-fpm flavors unused for now due to an issue with upload file size
-    ## (bug in mod_proxy?) when proxying is involved.
     ## TCP socket approach ##
     # $fpm_port = $site['php_fpm_port']
     # php::fpm::pool { $fqdn:
@@ -104,12 +98,12 @@ class profile::nextcloud_server (
     # }
 
     ## Unix socket approach ##
-    # php::fpm::pool { $fqdn:
-    #   listen       => "/var/run/php-${fqdn}.sock",
-    #   user         => $site['php_fpm_user'],
-    #   group        => $site['php_fpm_group'],
-    #   listen_owner => $::apache::user,
-    # }
+    php::fpm::pool { $fqdn:
+      listen       => "/var/run/php-${fqdn}.sock",
+      user         => $site['php_fpm_user'],
+      group        => $site['php_fpm_group'],
+      listen_owner => $::apache::user,
+    }
 
     apache::vhost { $fqdn:
       servername          => $fqdn,
@@ -130,7 +124,7 @@ class profile::nextcloud_server (
       ],
       proxy_pass_match    => [
         # { 'path' => '^/(.*\.php(/.*)?)$', 'url' => "fcgi://127.0.0.1:${fpm_port}${docroot}/" }
-        # { 'path' => '^/(.*\.php(/.*)?)$', 'url' => "unix:/var/run/php-${fqdn}.sock|fcgi://${fqdn}${docroot}/" }
+        { 'path' => '^/(.*\.php(/.*)?)$', 'url' => "unix:/var/run/php-${fqdn}.sock|fcgi://${fqdn}${docroot}/" }
       ],
       setenv              => [
         "HOME ${docroot}",

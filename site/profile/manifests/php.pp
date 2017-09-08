@@ -65,10 +65,11 @@ class profile::php (
       opcache => { zend => true }
     },
   }
-  # This is necessary to get libphp7.so; voxpupuli loves php-fpm.
-  -> package { 'php':
-    ensure => 'installed',
-  }
+
+  # If you wanted libphp7.so as well, to link directly into apache, you could add:
+  # -> package { 'php':
+  #   ensure => 'installed',
+  # }
 
   class { '::php_msi::extensions':
     require => Class['profile::php'],
