@@ -130,6 +130,9 @@ class profile::nextcloud_server (
         "HOME ${docroot}",
         "HTTP_HOME ${docroot}",
       ],
+      setenvif            => [
+        'Authorization "(.*)" HTTP_AUTHORIZATION=$1', # Because https://stackoverflow.com/questions/17018586/apache-2-4-php-fpm-and-authorization-headers
+      ],
       block               => ['scm'],
       additional_includes => [$cilogon_config]
     }
