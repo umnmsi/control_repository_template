@@ -42,21 +42,17 @@ class profile::nextcloud_server (
   $ssl_certs_dir = $::apache::params::ssl_certs_dir
   $apache_conf_dir = $::apache::params::conf_dir
 
-  $ip_based = length($sites) ? {
-    1       => true,
-    default => false,
-  }
-  $ip = $ip_based ? {
-    true    => $facts['ipaddress'],
-    default => undef,
-  }
-
   # Define a vhost and associated resources for each NextCloud instance.
   $sites.each |Hash $site| {
     ############################
     ### Apache configuration ###
     ############################
     $fqdn = $site['fqdn']
+    if $site['ip'] {
+      $ip = $site['ip']
+    } else {
+      $ip = $facts['ipaddress']
+    }
     $docroot = "/var/www/${fqdn}"
 
     file { "${ssl_certs_dir}/${fqdn}.crt":
@@ -109,7 +105,7 @@ class profile::nextcloud_server (
       servername          => $fqdn,
       ssl                 => true,
       port                => 443,
-      ip_based            => $ip_based,
+      ip_based            => true, # Always doing IP-based in case webDAV clients don't grok SNI.
       ip                  => $ip,
       ssl_cert            => "${ssl_certs_dir}/${fqdn}.crt",
       ssl_key             => "${ssl_certs_dir}/${fqdn}.key",
