@@ -76,11 +76,17 @@ class profile::nextcloud_server (
     $oidc_client_secret = $site['cilogon_client_secret']
     $oidc_crypto_passphrase = lookup('OIDCCryptoPassphrase')
 
+    # Force there to be an explicit opting out of CILogon in the yaml, if it is not used.
+    $cilogon_config_content = $site['no_cilogon_auth'] ? {
+      true    => '# CILogon unimplemented on this site',
+      default => template('website/nextcloud-cilogon.conf.erb'),
+    }
+
     file { $cilogon_config:
       owner     => 'root',
       group     => 'root',
       mode      => '0600',
-      content   => template('website/nextcloud-cilogon.conf.erb'),
+      content   => $cilogon_config_content,
       show_diff => false, # CILogon secret is embedded within
       notify    => Service['httpd'],
     }
