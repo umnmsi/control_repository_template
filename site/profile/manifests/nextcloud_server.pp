@@ -82,6 +82,7 @@ class profile::nextcloud_server (
       mode      => '0600',
       content   => template('website/nextcloud-cilogon.conf.erb'),
       show_diff => false, # CILogon secret is embedded within
+      require   => Class['apache'],
       notify    => Service['httpd'],
     }
 
