@@ -9,8 +9,11 @@ OIDCRedirectURI https://<%= @fqdn %>/oauth_callback
 OIDCCryptoPassphrase <%= @oidc_crypto_passphrase %>
 OIDCScope "openid email org.cilogon.userinfo profile"
 
-# Everything but webdav needs to be authenticated with CILogon.
-<LocationMatch "^/(?!remote\.php/webdav).*$">
+# Everything but webdav and status.php needs to be authenticated with CILogon.
+# Note that we have a support ticket indicating the supported configuration is
+# for only login and index.php/login to be authenticated with CILogon, so if
+# additional problems arise we might need to do that.
+<LocationMatch "^/(?!remote\.php/webdav|status\.php).*$">
   AuthType openid-connect
   Require valid-user
 </LocationMatch>
