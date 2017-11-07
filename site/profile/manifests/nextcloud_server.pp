@@ -108,6 +108,13 @@ class profile::nextcloud_server (
       listen_owner => $::apache::user,
     }
 
+    $custom_fragment = @("ENDDOC")
+    <FilesMatch .+\.php$>
+      SetHandler "proxy:unix:/var/run/php-${fqdn}.sock|fcgi://${fqdn}${docroot}/"
+    </FilesMatch>
+    <Proxy "fcgi://${fqdn}${docroot}/" enablereuse=on max=10></Proxy>
+    | ENDDOC
+
     apache::vhost { $fqdn:
       servername          => $fqdn,
       ssl                 => true,
@@ -127,8 +134,9 @@ class profile::nextcloud_server (
       ],
       proxy_pass_match    => [
         # { 'path' => '^/(.*\.php(/.*)?)$', 'url' => "fcgi://127.0.0.1:${fpm_port}${docroot}/" }
-        { 'path' => '^/(.*\.php(/.*)?)$', 'url' => "unix:/var/run/php-${fqdn}.sock|fcgi://${fqdn}${docroot}/" }
+        # { 'path' => '^/(.*\.php(/.*)?)$', 'url' => "unix:/var/run/php-${fqdn}.sock|fcgi://${fqdn}${docroot}/" }
       ],
+      custom_fragment     => $custom_fragment,
       setenv              => [
         "HOME ${docroot}",
         "HTTP_HOME ${docroot}",
