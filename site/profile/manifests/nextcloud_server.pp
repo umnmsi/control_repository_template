@@ -93,26 +93,25 @@ class profile::nextcloud_server (
     }
 
     ## TCP socket approach ##
-    # $fpm_port = $site['php_fpm_port']
-    # php::fpm::pool { $fqdn:
-    #   listen => "127.0.0.1:${fpm_port}",
-    #   user   => $site['php_fpm_user'],
-    #   group  => $site['php_fpm_group'],
-    # }
+    $fpm_port = $site['php_fpm_port']
+    php::fpm::pool { $fqdn:
+      listen => "127.0.0.1:${fpm_port}",
+      user   => $site['php_fpm_user'],
+      group  => $site['php_fpm_group'],
+    }
 
     ## Unix socket approach ##
-    php::fpm::pool { $fqdn:
-      listen       => "/var/run/php-${fqdn}.sock",
-      user         => $site['php_fpm_user'],
-      group        => $site['php_fpm_group'],
-      listen_owner => $::apache::user,
-    }
+    # php::fpm::pool { $fqdn:
+    #  listen       => "/var/run/php-${fqdn}.sock",
+    #  user         => $site['php_fpm_user'],
+    #  group        => $site['php_fpm_group'],
+    #  listen_owner => $::apache::user,
+    # }
 
     $custom_fragment = @("ENDDOC")
     <FilesMatch .+\.php$>
-      SetHandler "proxy:unix:/var/run/php-${fqdn}.sock|fcgi://${fqdn}${docroot}/"
+      SetHandler "proxy:fcgi://localhost:${fpm_port}${docroot}/"
     </FilesMatch>
-    <Proxy "fcgi://${fqdn}${docroot}/" enablereuse=on max=10></Proxy>
     | ENDDOC
 
     apache::vhost { $fqdn:
