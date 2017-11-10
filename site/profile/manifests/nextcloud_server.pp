@@ -110,7 +110,7 @@ class profile::nextcloud_server (
 
     $custom_fragment = @("ENDDOC")
     <FilesMatch .+\.php$>
-      SetHandler "proxy:fcgi://localhost:${fpm_port}${docroot}/"
+      SetHandler "proxy:fcgi://localhost:${fpm_port}"
     </FilesMatch>
     | ENDDOC
 
