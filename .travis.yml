@@ -13,4 +13,6 @@ notifications:
   irc:
     channels:
       - "irc.msi.umn.edu#iops"
+    on_success: change
+    on_failure: always
     skip_join: true
