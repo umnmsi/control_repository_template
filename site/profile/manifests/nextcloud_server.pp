@@ -111,6 +111,7 @@ class profile::nextcloud_server (
     $custom_fragment = @("ENDDOC")
     <FilesMatch .+\.php$>
       SetHandler "proxy:fcgi://localhost:${fpm_port}"
+      ProxyTimeout 21600
     </FilesMatch>
     | ENDDOC
 
