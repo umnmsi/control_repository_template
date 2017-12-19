@@ -37,6 +37,12 @@ class profile::nextcloud_server (
 
   include apache_msi::mod::auth_openidc
 
+  file { '/data':
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
 
   # Set variables
   $ssl_certs_dir = $::apache::params::ssl_certs_dir
@@ -142,7 +148,8 @@ class profile::nextcloud_server (
         "HTTP_HOME ${docroot}",
       ],
       setenvif            => [
-        'Authorization "(.*)" HTTP_AUTHORIZATION=$1', # Because https://stackoverflow.com/questions/17018586/apache-2-4-php-fpm-and-authorization-headers
+        'Authorization "(.*)" HTTP_AUTHORIZATION=$1',
+        # Because https://stackoverflow.com/questions/17018586/apache-2-4-php-fpm-and-authorization-headers
       ],
       block               => ['scm'],
       additional_includes => [$cilogon_config]
@@ -176,6 +183,16 @@ class profile::nextcloud_server (
       command => "/bin/php -f ${docroot}/cron.php",
       user    => $site['php_fpm_user'],
       minute  => '*/10',
+    }
+
+    ######################
+    ### Data directory ###
+    ######################
+    file { "/data/${fqdn}":
+      ensure => 'directory',
+      owner  => $site['php_fpm_user'],
+      group  => 'drupal',
+      mode   => '0770',
     }
   }
 }
