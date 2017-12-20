@@ -174,7 +174,7 @@ class profile::nextcloud_server (
       ensure   => latest,
       revision => $site['git_revision'],
       provider => git,
-      source   => 'git://github.umn.edu:msi/nextcloud.git',
+      source   => 'git@github.umn.edu:msi/nextcloud.git',
       user     => 'drupal',
       require  => Apache::Vhost[$fqdn],
       notify   => Exec["nextcloud db upgrade for ${fqdn}"],
