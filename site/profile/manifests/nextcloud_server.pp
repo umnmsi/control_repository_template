@@ -180,6 +180,19 @@ class profile::nextcloud_server (
       notify   => Exec["nextcloud db upgrade for ${fqdn}"],
     }
 
+    $configfile = "${docroot}/config/config.php"
+    file { $configfile:
+      ensure  => file,
+      owner   => $site['php_fpm_user'],
+      group   => 'drupal',
+      mode    => '0640',
+      content => inline_epp($site['config.php.epp'],
+        { 'database_password' => $site['database_password'],
+          'secret'            => $site['config.php_secret']
+        }),
+      require => Vcsrepo[$docroot],
+    }
+
     # This command knows how to check and do nothing when the db schema is already
     # fully upgraded, so it is harmless to run after code changes that don't require
     # a db upgrade.
@@ -188,7 +201,10 @@ class profile::nextcloud_server (
       user        => $site['php_fpm_user'],
       command     => "/usr/bin/env php ${docroot}/occ upgrade --no-interaction",
       refreshonly => true,
-      require     => Mysql::Db[$site['database_name']],
+      require     => [
+        Mysql::Db[$site['database_name']],
+        File[$configfile],
+      ],
     }
 
     ##############################
@@ -208,6 +224,7 @@ class profile::nextcloud_server (
       command => "/bin/php -f ${docroot}/cron.php",
       user    => $site['php_fpm_user'],
       minute  => '*/10',
+      require => File[$configfile],
     }
 
     ######################
