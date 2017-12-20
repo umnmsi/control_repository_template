@@ -223,7 +223,7 @@ class profile::nextcloud_server (
           ),
         ),
       'memcache.local' => '\\OC\\Memcache\\APCu',
-      'overwrite.cli.url' => 'https://<%= $fqdn %>,
+      'overwrite.cli.url' => 'https://<%= $fqdn %>',
       'dbtype' => 'mysql',
       'dbname' => '<%= $dbname %>',
       'dbhost' => 'localhost',
