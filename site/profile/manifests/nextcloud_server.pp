@@ -247,7 +247,7 @@ class profile::nextcloud_server (
       ensure  => file,
       owner   => $site['php_fpm_user'],
       group   => 'drupal',
-      mode    => '0640',
+      mode    => '0440',
       content => inline_epp($configcontent,
         {
           'docroot'           => $docroot,
