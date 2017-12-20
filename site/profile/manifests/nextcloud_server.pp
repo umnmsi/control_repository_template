@@ -44,6 +44,13 @@ class profile::nextcloud_server (
     mode   => '0755',
   }
 
+  file { '/var/nextcloud-tmp':
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+
   # Set variables
   $ssl_certs_dir = $::apache::params::ssl_certs_dir
   $apache_conf_dir = $::apache::params::conf_dir
@@ -181,14 +188,76 @@ class profile::nextcloud_server (
     }
 
     $configfile = "${docroot}/config/config.php"
+
+    $configcontent = @(END)
+    <%- |
+      String $docroot,
+      String $fqdn,
+      String $salt,
+      String $dbname,
+      String $database_password,
+      String $secret,
+      String $instanceid,
+      String $additional_config
+    | -%>
+    <?php
+    $CONFIG = array (
+      'passwordsalt' => 'be7TtlknbWkdu9/XxB11gl4SWIyjq4',
+      'secret' => '<%= $secret %>',
+      'trusted_domains' =>
+      array (
+        0 => 'localhost',
+        1 => '<%= $fqdn %>',
+      ),
+      'datadirectory' => '/data/<%= $fqdn %>',
+      'tempdirectory' => '/var/nextcloud-tmp/<%= $fqdn %>',
+      'config_is_read_only' => true,
+      'appstoreenabled' => false,
+      'apps_paths' =>
+        array (
+          0 =>
+          array (
+            'path' => '<%= $docroot %>/apps',
+            'url' => '/apps',
+            'writable' => false,
+          ),
+        ),
+      'memcache.local' => '\\OC\\Memcache\\APCu',
+      'overwrite.cli.url' => 'https://<%= $fqdn %>,
+      'dbtype' => 'mysql',
+      'dbname' => '<%= $dbname %>',
+      'dbhost' => 'localhost',
+      'dbport' => '',
+      'dbtableprefix' => 'oc_',
+      'dbuser' => '<%= $dbname %>',
+      'dbpassword' => '<%= $database_password %>',
+      'installed' => true,
+      'instanceid' => '<%= $instanceid %>',
+      <%= $additional_config %>
+    );
+    | END
+
+    if ($site['config.php_addendum']) {
+      $additional_config = inline_epp($site['config.php_addendum'], {'site' => $site})
+    } else {
+      $additional_config = ''
+    }
+
     file { $configfile:
       ensure  => file,
       owner   => $site['php_fpm_user'],
       group   => 'drupal',
       mode    => '0640',
-      content => inline_epp($site['config.php.epp'],
-        { 'database_password' => $site['database_password'],
-          'secret'            => $site['config.php_secret']
+      content => inline_epp($configcontent,
+        {
+          'docroot'           => $docroot,
+          'fqdn'              => $fqdn,
+          'salt'              => $site['config.php_salt'],
+          'dbname'            => $site['database_name'],
+          'database_password' => $site['database_password'],
+          'secret'            => $site['config.php_secret'],
+          'instanceid'        => $site['config.php_instanceid'],
+          'additional_config' => $additional_config
         }),
       require => Vcsrepo[$docroot],
     }
@@ -231,6 +300,16 @@ class profile::nextcloud_server (
     ### Data directory ###
     ######################
     file { "/data/${fqdn}":
+      ensure => 'directory',
+      owner  => $site['php_fpm_user'],
+      group  => 'drupal',
+      mode   => '0770',
+    }
+
+    ######################
+    ### Temp directory ###
+    ######################
+    file { "/var/nextcloud-tmp/${fqdn}":
       ensure => 'directory',
       owner  => $site['php_fpm_user'],
       group  => 'drupal',

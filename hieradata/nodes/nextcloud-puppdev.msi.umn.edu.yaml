@@ -14,29 +14,5 @@ profile::nextcloud_server::sites:
     cilogon_client_id     : myproxy:oa4mp,2012:/client_id/7d03e7811af9725b87fa2df4a96af12d
     cilogon_client_secret : ENC[PKCS7,MIIBygYJKoZIhvcNAQcDoIIBuzCCAbcCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAibcyYFuyIIRukDysmdLhxDXm/WDmTox/jmPytWM0JDr9zbKmXprq4lFSuWL0ThH/grfGm/L+A8d0PrPbGJkunE8L2FiVMKVo3avQ74Lid1cALbpBDr560GrGx+gONi3otN58bdgG6/CGHYplbhexCgAQZlh8aPzsnwgBsOisq7heif6iIHbcZBBNTolgzhrhJPi7ZIQFRWfi7m5fSun7wcNPTlc3w/LSUa9GLxpmO+qOl5BYaswS31u8GaDC6Q6J/LRHoUX5xZZmL5FGGs/2sYUJflHFPvsEPHzT/r8x0FZnNSDJWQC2VpnYbW/g+tLfHLZoawUsPwfHfBAVnVhLaDCBjAYJKoZIhvcNAQcBMB0GCWCGSAFlAwQBKgQQo0JHh1VdFmpkYic9M2iPS4BgvJhtBD19EHd4j57hVz/O9iOvEfKx47c9gKhF2mZP3Py8Ht4RtujZFAF+AO+4gJwSpEcD6Wm+LJ+zQUYjfNiB+21Cvt0IzOFL0G8IhWduP0ibib2/WFm4Y/6kaFW79sEz]
     config.php_secret     : ENC[PKCS7,MIIBqQYJKoZIhvcNAQcDoIIBmjCCAZYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAiRXdiB5EBJ7ESlaS0Fy1+v4gE00AaNx2+ye0pUDVjNda9qyPn5wNS4byQNUHa3zrMNJiKvIHT8vV7HcUgt6VLNMY++KunPOf1O+uaaZYFrFSEz1XqdbIKxFOt1X9VVcV9Y48OXO/zpSQLU6wmKdchPeaVb6MgDnwewK6oTlpavj3XeFO1ICgMKakaA3jiDOcKulSPd/voO9eDNQKct/KD1/TDCx+JUTTn4ya1pqr+ytoDavngBRj5WENPZZA+curL8cnqyQiehjGSxwaGZWXi2YbozKORar7ZBwwYkMtSed0HobEcq8ktIQQoJbpK8gKjzXxDFNFzla1BEmpjnt7LzBsBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDYcTwLlOD0IOFewyl7GpsPgEAShZTA38yQbwZWwbCk0z+3pkkhG1gfIoc1u79FH6Nn8BwuFdcNaxEZdVFZnRyN1CCnNd/2y+ZMku0hlXix4M2y]
-    config.php.epp: |
-      <%- | String $database_password, String $secret | -%>
-      <?php
-      $CONFIG = array (
-        'passwordsalt' => 'be7TtlknbWkdu9/XxB11gl4SWIyjq4',
-        'secret' => '<%= $secret %>',
-        'trusted_domains' =>
-        array (
-          0 => 'localhost',
-          1 => '10.32.16.128',
-          2 => 'nextcloud-puppdev.msi.umn.edu',
-        ),
-        'datadirectory' => '/var/www/nextcloud-puppdev.msi.umn.edu/data',
-        'tempdirectory' => '/data/nextcloudtemp',
-        'overwrite.cli.url' => 'https://nextcloud-puppdev.msi.umn.edu',
-        'dbtype' => 'mysql',
-        'version' => '12.0.2.0',
-        'dbname' => 'nextcloud',
-        'dbhost' => 'localhost',
-        'dbport' => '',
-        'dbtableprefix' => 'oc_',
-        'dbuser' => 'nextcloud',
-        'dbpassword' => '<%= $database_password %>',
-        'installed' => true,
-        'instanceid' => 'oc75ehyl6few',
-      );
+    config.php_salt       : be7TtlknbWkdu9/XxB11gl4SWIyjq4
+    config.php_instanceid : oc75ehyl6few
