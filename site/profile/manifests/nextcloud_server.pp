@@ -130,6 +130,7 @@ class profile::nextcloud_server (
       ssl_cert            => "${ssl_certs_dir}/${fqdn}.crt",
       ssl_key             => "${ssl_certs_dir}/${fqdn}.key",
       docroot             => $docroot,
+      docroot_owner       => 'drupal',
       directories         => [
         {
           path             => $docroot,
@@ -164,6 +165,30 @@ class profile::nextcloud_server (
       docroot         => '/var/www/nonssl_redirect_empty_docroot',
       redirect_status => 'permanent',
       redirect_dest   => "https://${fqdn}/",
+    }
+
+    ###############################
+    ### Docroot contents - code ###
+    ###############################
+    vcsrepo { $docroot:
+      ensure   => latest,
+      revision => $site['git_revision'],
+      provider => git,
+      source   => 'ssh://msi-githubuser@github.umn.edu:msi/nextcloud.git',
+      user     => 'drupal',
+      require  => Apache::Vhost[$fqdn],
+      notify   => Exec["nextcloud db upgrade for ${fqdn}"],
+    }
+
+    # This command knows how to check and do nothing when the db schema is already
+    # fully upgraded, so it is harmless to run after code changes that don't require
+    # a db upgrade.
+    # TODO: test what this does on first deployment, before db is installed.
+    exec { "nextcloud db upgrade for ${fqdn}":
+      user        => $site['php_fpm_user'],
+      command     => "/usr/bin/env php ${docroot}/occ upgrade --no-interaction",
+      refreshonly => true,
+      require     => Mysql::Db[$site['database_name']],
     }
 
     ##############################
