@@ -31,6 +31,10 @@ mod 'apache_msi',
   :git    => 'git@github.umn.edu:msi/ops_puppet_apache_msi.git',
   :branch => '1.0'
 
+mod 'nextcloud_msi',
+  :git    => 'git@github.umn.edu:MSI-Puppet/nextcloud_msi.git',
+  :branch => '1.0'
+
 mod 'php_msi',
   :git    => 'git@github.umn.edu:msi/ops_puppet_php_msi.git',
   :branch => '1.0'
