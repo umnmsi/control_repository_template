@@ -33,3 +33,12 @@ node default {
   # Example:
   #   class { 'my_class': }
 }
+
+node nick-puppet5client2.msi.umn.edu {
+  file { '/etc/demo':
+    ensure => file,
+    mode   => '0770',
+    owner  => 'root',
+    group  => 'root',
+  }
+}
