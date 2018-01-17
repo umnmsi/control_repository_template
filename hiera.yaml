@@ -1,7 +1,7 @@
 ---
 version: 5
 defaults:
-  datadir: ../../hieradata/persistent_systems_%{server_facts.environment}
+  datadir: ../../hieradata/%{server_facts.environment}
   data_hash: yaml_data
 
 hierarchy:
