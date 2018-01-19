@@ -34,11 +34,4 @@ node default {
   #   class { 'my_class': }
 }
 
-node 'nick-puppet5client2' {
-  file { '/etc/demo':
-    ensure => file,
-    mode   => '0770',
-    owner  => 'root',
-    group  => 'root',
-  }
-}
+
