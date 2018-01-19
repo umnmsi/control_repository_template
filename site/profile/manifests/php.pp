@@ -38,6 +38,7 @@ class profile::php (
     php_version => '7.1',
   }
   # Add remi repos here rather than ::php's manage_repos, which doesn't produce php 7 repo.
+  # A possible alternative source of current PHP RPMs, should remirepo stop being updated: https://ius.io/
   -> yumrepo { 'remi':
     descr      => 'Remi\'s RPM repository for Enterprise Linux $releasever - $basearch',
     mirrorlist => 'https://rpms.remirepo.net/enterprise/$releasever/remi/mirror',
