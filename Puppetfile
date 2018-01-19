@@ -28,13 +28,13 @@ mod 'puppetlabs-vcsrepo',      '2.2.0'   # Latest on 12/20/17
 # https://docs.google.com/a/umn.edu/presentation/d/1OcMAZLw_tgkNvzEPaaFWiAEIryz9GIPsTS0pfCQYJ80/edit?usp=sharing
 
 mod 'apache_msi',
-  :git    => 'git@github.umn.edu:msi/ops_puppet_apache_msi.git',
+  :git    => 'git@github.umn.edu:MSI-Puppet/module-apache_msi.git',
   :branch => '1.0'
 
 mod 'nextcloud_msi',
-  :git    => 'git@github.umn.edu:MSI-Puppet/nextcloud_msi.git',
+  :git    => 'git@github.umn.edu:MSI-Puppet/module-nextcloud_msi.git',
   :branch => '1.0'
 
 mod 'php_msi',
-  :git    => 'git@github.umn.edu:msi/ops_puppet_php_msi.git',
+  :git    => 'git@github.umn.edu:MSI-Puppet/module-php_msi.git',
   :branch => '1.0'
