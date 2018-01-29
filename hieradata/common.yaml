@@ -6,6 +6,10 @@
 classes:
   - profile::base_iops
 
+# Puppetlabs/puppet_agent is predeployed to streamline future agent upgrades, but it should not start mcollective.
+puppet_agent::service_names:
+  - puppet
+
 php::repo::redhat:yum_repo: remi_php71
 php::globals::php_version: 7.1.7
 
