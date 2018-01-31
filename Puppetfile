@@ -18,6 +18,7 @@ mod 'puppetlabs-inifile',      '2.0.0'   # Latest on 7/26/17
 mod 'puppetlabs-mysql',        '3.11.0'  # Latest on 7/27/17
 mod 'puppetlabs-stdlib',       '4.17.1'  # Latest on 7/26/17
 mod 'puppetlabs-vcsrepo',      '2.2.0'   # Latest on 12/20/17
+mod 'puppetlabs-firewall',     '1.12.0'	 # Latest on 1/25/18
 
 # MSI "shared service" modules on UMN github.
 # These will require an ssh key to be established for the user running r10k
@@ -37,4 +38,12 @@ mod 'nextcloud_msi',
 
 mod 'php_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-php_msi.git',
+  :branch => '1.0'
+
+mod 'panasas_msi',
+  :git    => 'git@github.umn.edu:MSI-Puppet/module-panasas_msi.git',
+  :branch => '1.0'
+
+mod 'firewall_msi',
+  :git    => 'git@github.umn.edu:MSI-Puppet/module-firewall_msi.git',
   :branch => '1.0'
