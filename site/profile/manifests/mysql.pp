@@ -13,14 +13,8 @@ class profile::mysql(
   String $root_password = '',
   Hash $override_options = { },
 ) {
-  if $root_password == '' {
-    $_root_password = lookup('credentials_mysql.root_password')
-  } else {
-    $_root_password = $root_password
-  }
-
   class { '::mysql::server':
-    root_password           => $_root_password,
+    root_password           => $root_password,
     remove_default_accounts => true,
     override_options        => deep_merge({
         'mysqld' => {
