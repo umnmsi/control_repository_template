@@ -11,7 +11,7 @@ class profile::nextcloud_server (
   Array $sites,
 ) {
   # Include further profiles and classes
-  include profile::apache_webserver
+  include apache_msi::profile
   include profile::mysql
 
   # This breaks role/profile rules by including profile::php with resource-like

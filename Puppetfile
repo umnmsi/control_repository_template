@@ -11,7 +11,7 @@ mod 'puppet-php',
 mod 'puppet-staging',          '2.2.0'   # Latest on 7/27/17. Dependency of puppetlabs-mysql.
 
 # Maintaned by Puppetlabs
-mod 'puppetlabs-apache',       '2.0.0'   # Latest on 7/26/17
+mod 'puppetlabs-apache',       '2.3.1'   # Latest on 2/14/2018
 mod 'puppetlabs-apt',          '4.1.0'   # Latest on 7/26/17
 mod 'puppetlabs-concat',       '4.0.1'   # Latest on 7/26/17
 mod 'puppetlabs-inifile',      '2.0.0'   # Latest on 7/26/17
@@ -30,11 +30,11 @@ mod 'puppetlabs-firewall',     '1.12.0'	 # Latest on 1/25/18
 
 mod 'apache_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-apache_msi.git',
-  :branch => '1.0'
+  :branch => '1.1'
 
 mod 'nextcloud_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-nextcloud_msi.git',
-  :branch => '1.0'
+  :branch => '1.1'
 
 mod 'php_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-php_msi.git',
