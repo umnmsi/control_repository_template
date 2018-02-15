@@ -1,0 +1,5 @@
+# This file controls which individuals and teams are considered by github to be "code owners."
+# One of these individuals must currently approve PRs in the develop branch.
+
+# glob                               # owners
+*                                    @MSI-Puppet/puppet-librarians
