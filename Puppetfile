@@ -11,7 +11,7 @@ mod 'puppet-php',
 mod 'puppet-staging',          '2.2.0'   # Latest on 7/27/17. Dependency of puppetlabs-mysql.
 
 # Maintaned by Puppetlabs
-mod 'puppetlabs-apache',       '2.0.0'   # Latest on 7/26/17
+mod 'puppetlabs-apache',       '2.3.1'   # Latest on 2/14/2018
 mod 'puppetlabs-apt',          '4.1.0'   # Latest on 7/26/17
 mod 'puppetlabs-concat',       '4.0.1'   # Latest on 7/26/17
 mod 'puppetlabs-inifile',      '2.0.0'   # Latest on 7/26/17
@@ -19,6 +19,7 @@ mod 'puppetlabs-mysql',        '3.11.0'  # Latest on 7/27/17
 mod 'puppetlabs-puppet_agent', '1.5.0'   # Latest on 1/29/18
 mod 'puppetlabs-stdlib',       '4.17.1'  # Latest on 7/26/17
 mod 'puppetlabs-vcsrepo',      '2.2.0'   # Latest on 12/20/17
+mod 'puppetlabs-firewall',     '1.12.0'	 # Latest on 1/25/18
 
 # MSI "shared service" modules on UMN github.
 # These will require an ssh key to be established for the user running r10k
@@ -30,12 +31,20 @@ mod 'puppetlabs-vcsrepo',      '2.2.0'   # Latest on 12/20/17
 
 mod 'apache_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-apache_msi.git',
-  :branch => '1.0'
+  :branch => '1.1'
 
 mod 'nextcloud_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-nextcloud_msi.git',
-  :branch => '1.0'
+  :branch => '1.1'
 
 mod 'php_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-php_msi.git',
+  :branch => '1.0'
+
+mod 'panasas_msi',
+  :git    => 'git@github.umn.edu:MSI-Puppet/module-panasas_msi.git',
+  :branch => '1.0'
+
+mod 'firewall_msi',
+  :git    => 'git@github.umn.edu:MSI-Puppet/module-firewall_msi.git',
   :branch => '1.0'

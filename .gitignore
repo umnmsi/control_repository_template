@@ -1,5 +1,6 @@
 /Gemfile.lock
 /vendor
 /.bundle
+*.swp
 
 hieradata/nodes/example-puppet-master.yaml
