@@ -33,18 +33,31 @@ mod 'apache_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-apache_msi.git',
   :branch => '1.1'
 
-mod 'nextcloud_msi',
-  :git    => 'git@github.umn.edu:MSI-Puppet/module-nextcloud_msi.git',
-  :branch => '1.1'
-
-mod 'php_msi',
-  :git    => 'git@github.umn.edu:MSI-Puppet/module-php_msi.git',
+mod 'baseline_config_msi',
+  :git    => 'git@github.umn.edu:MSI-Puppet/module-baseline_config_msi.git',
   :branch => '1.0'
 
-mod 'panasas_msi',
-  :git    => 'git@github.umn.edu:MSI-Puppet/module-panasas_msi.git',
+mod 'facts_msi',
+  :git    => 'git@github.umn.edu:MSI-Puppet/module-facts_msi.git',
   :branch => '1.0'
 
 mod 'firewall_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-firewall_msi.git',
   :branch => '1.0'
+
+mod 'nextcloud_msi',
+  :git    => 'git@github.umn.edu:MSI-Puppet/module-nextcloud_msi.git',
+  :branch => '1.1'
+
+mod 'panasas_msi',
+  :git    => 'git@github.umn.edu:MSI-Puppet/module-panasas_msi.git',
+  :branch => '1.0'
+
+mod 'php_msi',
+  :git    => 'git@github.umn.edu:MSI-Puppet/module-php_msi.git',
+  :branch => '1.0'
+
+mod 'puppet_agent_msi',
+  :git    => 'git@github.umn.edu:MSI-Puppet/module-puppet_agent_msi.git',
+  :branch => '1.0'
+
