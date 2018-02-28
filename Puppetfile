@@ -2,6 +2,7 @@ forge "http://forge.puppetlabs.com"
 
 # Modules from the Puppet Forge, in alphabetical order.
 mod 'darin-zypprepo',          '1.0.2'   # Latest on 7/26/17. Dependency of puppet-php.
+mod 'treydock-repo_centos',    '4.0.0'   # Provides puppet management of yum repos for centos. Latest on 2/26/18.
 
 # Maintained by Vox Pupuli (https://voxpupuli.org/)
 mod 'puppet-archive',          '1.3.0'   # Latest on 7/26/17
@@ -16,7 +17,7 @@ mod 'puppetlabs-apt',          '4.1.0'   # Latest on 7/26/17
 mod 'puppetlabs-concat',       '4.0.1'   # Latest on 7/26/17
 mod 'puppetlabs-inifile',      '2.0.0'   # Latest on 7/26/17
 mod 'puppetlabs-mysql',        '3.11.0'  # Latest on 7/27/17
-mod 'puppetlabs-puppet_agent', '1.5.0'   # Latest on 1/29/18
+# mod 'puppetlabs-puppet_agent', '1.5.0'   # Latest on 1/29/18; using fork (below) to allow specification of package version 'present'
 mod 'puppetlabs-stdlib',       '4.17.1'  # Latest on 7/26/17
 mod 'puppetlabs-vcsrepo',      '2.2.0'   # Latest on 12/20/17
 mod 'puppetlabs-firewall',     '1.12.0'	 # Latest on 1/25/18
@@ -57,7 +58,10 @@ mod 'php_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-php_msi.git',
   :branch => '1.0'
 
+mod 'puppet_agent',
+  :git    => 'https://github.com/mbaynton/puppetlabs-puppet_agent.git',
+  :branch => 'allow_present-latest'
+
 mod 'puppet_agent_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-puppet_agent_msi.git',
   :branch => '1.0'
-
