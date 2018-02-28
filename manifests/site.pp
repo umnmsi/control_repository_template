@@ -30,6 +30,9 @@ hiera_include('classes')
 
 node default {
   # This is where you can declare classes for all nodes.
+  # Assigning classes through hiera is preferred, see the 'classes' key of
+  # hieradata/common.yaml in this repository.
+  #
   # Example:
   #   class { 'my_class': }
 }
