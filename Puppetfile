@@ -40,7 +40,7 @@ mod 'baseline_config_msi',
 
 mod 'facts_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-facts_msi.git',
-  :branch => '1.0'
+  :branch => '1.0-environment_type'
 
 mod 'firewall_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-firewall_msi.git',
