@@ -35,6 +35,7 @@ node default {
   #
   # Example:
   #   class { 'my_class': }
+  notify("Environment type: ${facts['environment_type']}")
 }
 
 
