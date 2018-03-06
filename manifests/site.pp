@@ -15,8 +15,22 @@
 #https://docs.puppet.com/pe/2015.3/release_notes.html#filebucket-resource-no-longer-created-by-default
 File { backup => false }
 
-## Allow assignment of classes to nodes in hiera ##
-hiera_include('classes')
+# Our puppet manifests are generally written for and require puppet 4.10.
+# Although puppet 3 agents are fairly good at following a puppet 4 server's
+# directions, they don't always provide structured facts, for example, which
+# our manifests assume are available.
+# To minimize risk of overall catalog compilation failure when bringing up a
+# new node, only give it the bare minimum catalog required to upgrade to puppet
+# 4 if it is running puppet 3. This bare-minimum catalog must be kept compliant
+# with default puppet 3 agent settings.
+# We'll apply its full catalog on the next go-round.
+if ($puppetversion =~ /^3\./) {
+  notify { 'This is Puppet 3, but the catalog for this node may require Puppet 4. This alternate catalog will only upgrade the agent.': }
+  include puppet_agent_msi::profile
+} else {
+  ## Perform assignment of classes to nodes in hiera ##
+  hiera_include('classes')
+}
 
 # DEFAULT NODE
 # Node definitions in this file are merged with node data from the console. See
