@@ -22,5 +22,5 @@ hierarchy:
     path: "hardwaretype/%{facts.vm_cluster}.yaml"
 
   - name: "Common data"
-    path: "common.yaml"
     data_hash: yaml_data
+    path: "common.yaml"
