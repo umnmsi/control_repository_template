@@ -2,7 +2,6 @@ forge "http://forge.puppetlabs.com"
 
 # Modules from the Puppet Forge, in alphabetical order.
 mod 'darin-zypprepo',          '1.0.2'   # Latest on 7/26/17. Dependency of puppet-php.
-mod 'treydock-repo_centos',    '4.0.0'   # Provides puppet management of yum repos for centos. Latest on 2/26/18.
 
 # Maintained by Vox Pupuli (https://voxpupuli.org/)
 mod 'puppet-archive',          '1.3.0'   # Latest on 7/26/17
