@@ -29,7 +29,7 @@ mod 'puppet_agent',
 
 # pax - package and repository management
 mod 'pax',
-  :git    => 'https://github.com/mbaynton/pax.git',
+  :git    => 'git@github.umn.edu:MSI-Puppet/module-pax.git',
   :branch => '0.1.0'
 
 # MSI "shared service" modules on UMN github.
