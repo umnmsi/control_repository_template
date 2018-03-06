@@ -22,6 +22,17 @@ mod 'puppetlabs-stdlib',       '4.17.1'  # Latest on 7/26/17
 mod 'puppetlabs-vcsrepo',      '2.2.0'   # Latest on 12/20/17
 mod 'puppetlabs-firewall',     '1.12.0'	 # Latest on 1/25/18
 
+# Forked modules.
+# We should aspire to get changes merged back into the mainline module.
+mod 'puppet_agent',
+  :git    => 'https://github.com/mbaynton/puppetlabs-puppet_agent.git',
+  :branch => 'allow_present-latest'
+
+# pax - package and repository management
+mod 'pax',
+  :git    => 'https://github.com/mbaynton/pax.git',
+  :branch => '0.1.0'
+
 # MSI "shared service" modules on UMN github.
 # These will require an ssh key to be established for the user running r10k
 # on the puppetserver, and that public key to be installed as a deployment key
@@ -57,10 +68,6 @@ mod 'panasas_msi',
 mod 'php_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-php_msi.git',
   :branch => '1.0'
-
-mod 'puppet_agent',
-  :git    => 'https://github.com/mbaynton/puppetlabs-puppet_agent.git',
-  :branch => 'allow_present-latest'
 
 mod 'puppet_agent_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-puppet_agent_msi.git',
