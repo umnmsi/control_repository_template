@@ -3,7 +3,7 @@ class profile::base_iops {
   # rather than reading from hiera per best practice.
   case $facts['os']['name'] {
     'CentOS': {
-      $default_repos = ['base', 'update', 'epel']
+      $default_repos = ['base', 'updates', 'epel']
     }
     default: {
       $default_repos = []
