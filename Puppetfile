@@ -71,3 +71,9 @@ mod 'php_msi',
 mod 'puppet_agent_msi',
   :git    => 'git@github.umn.edu:MSI-Puppet/module-puppet_agent_msi.git',
   :branch => '1.0'
+
+# Trivial modules repo.
+mod 'psi_trivial_modules',
+  :git    => 'git@github.umn.edu:MSI-Puppet/psi_trivial_modules.git',
+  :branch => 'production',
+  :install_path => ''
