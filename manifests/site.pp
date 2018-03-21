@@ -29,7 +29,7 @@ if ($puppetversion =~ /^3\./) {
   include puppet_agent_msi::profile
 } else {
   ## Perform assignment of classes to nodes in hiera ##
-  hiera_include('classes')
+  include(lookup('classes', { 'merge' => 'unique' }))
 }
 
 # DEFAULT NODE
