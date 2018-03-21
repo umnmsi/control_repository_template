@@ -4,7 +4,6 @@
 # If a node should not have one of these basic classes, perhaps it is so different that it
 # shouldn't be in this puppet environment.
 classes:
-  - baseline_config_msi::profile
   - profile::base_iops
 
 php::repo::redhat:yum_repo: remi_php71
