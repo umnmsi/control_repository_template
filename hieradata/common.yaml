@@ -1,10 +1,4 @@
 ---
-# This key is necessary for a lookup() in site.pp that includes classes to not error.
-# It also installs default classes that all nodes in the environment are expected to have.
-# If a node should not have one of these basic classes, perhaps it is so different that it
-# shouldn't be in this puppet environment.
-classes:
-  - profile::base_iops
-
-php::repo::redhat:yum_repo: remi_php71
-php::globals::php_version: 7.1.7
+# Add classes for all nodes managed by this control repo here.
+# classes:
+#   - fred

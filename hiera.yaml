@@ -6,7 +6,7 @@ defaults:
 
 hierarchy:
   - name: "Per-node data"
-    datadir: ../../node-hieradata/master
+    datadir: ../../default_node-hieradata/master
     lookup_key: eyaml_lookup_key
     path: "%{trusted.certname}.yaml"
     options:
