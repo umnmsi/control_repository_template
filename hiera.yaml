@@ -6,9 +6,16 @@ defaults:
 
 hierarchy:
   - name: "Per-node data"
-    datadir: ../../default_node-hieradata/master
+    datadir: ../../nodes/master
     lookup_key: eyaml_lookup_key
     path: "%{trusted.certname}.yaml"
+    options:
+      pkcs7_private_key: /etc/puppetlabs/puppet/eyaml/private_key.pkcs7.pem
+      pkcs7_public_key:  /etc/puppetlabs/puppet/eyaml/public_key.pkcs7.pem
+
+  - name: "Primary Role values"
+    lookup_key: eyaml_lookup_key
+    path: "primary_role/%{primary_role}.yaml"
     options:
       pkcs7_private_key: /etc/puppetlabs/puppet/eyaml/private_key.pkcs7.pem
       pkcs7_public_key:  /etc/puppetlabs/puppet/eyaml/public_key.pkcs7.pem
