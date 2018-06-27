@@ -27,16 +27,24 @@ File { backup => false }
 if ($puppetversion =~ /^3\./) {
   notify { 'This is Puppet 3, but the catalog for this node may require Puppet 4. This alternate catalog will only upgrade the agent.': }
   include puppet_agent_msi::profile
-} elsif (baseline_config_msi::environment_type() == 'misclassified') {
-  # Nodes not properly classified to a particular environment just get a minimal
-  # configuration
-  include baseline_config_msi::profile
 } else {
-  # Puppet 4+ nodes intentionally placed in an environment get classes from hiera.
-  if (defined('$primary_role')) {
-    include("role::${primary_role}")
+  # Make sure baseline_config_msi::profile and its children are evaluated first;
+  # this allows hiera-included roles/classes to safely use out-of-scope variables
+  # declared in baseline_config_msi::profile.
+  # Retain the ability to exclude baseline_config_msi::profile through hiera.
+  $additional_classes = lookup('additional_classes', Array[String])
+  if (member($additional_classes, 'baseline_config_msi::profile')) {
+    include baseline_config_msi::profile
   }
-  include(lookup('additional_classes', Array[String]))
+
+  # Nodes not properly classified to a particular environment just get baseline_config_msi::profile
+  # to ensure classification gets done.
+  if (baseline_config_msi::environment_type() != 'misclassified') {
+    if (defined('$primary_role')) {
+      include("role::${primary_role}")
+    }
+    include($additional_classes)
+  }
 }
 
 # DEFAULT NODE
