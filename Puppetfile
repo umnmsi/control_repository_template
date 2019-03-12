@@ -2,6 +2,7 @@ forge "http://forge.puppetlabs.com"
 
 # Maintained by Vox Pupuli (https://voxpupuli.org/)
 mod 'puppet-archive',          '1.3.0'   # Latest on 7/26/17
+mod 'puppet-selinux',          '1.5.2'   # Latest on 05/18/18
 
 # Maintaned by Puppetlabs
 mod 'puppetlabs-apt',          '4.1.0'   # Latest on 7/26/17
